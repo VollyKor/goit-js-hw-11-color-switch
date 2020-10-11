@@ -7,7 +7,8 @@ const colors = [
   '#795548',
 ];
 
-let isActive = null;
+let isActive = false;
+let setNewColor = null;
 
 const refs = {
   body: document.querySelector('body'),
@@ -15,8 +16,21 @@ const refs = {
   stop: document.querySelector('[data-action="stop"]'),
 };
 
-refs.start.addEventListener('click', changeBgColor);
-refs.stop.addEventListener('click', stopSwitchColor);
+refs.start.addEventListener('click', startSwitchBgColor);
+refs.stop.addEventListener('click', stopSwitchBgColor);
+
+function startSwitchBgColor() {
+  if (isActive) {
+    return;
+  }
+  isActive = true;
+  setNewColor = setInterval(changeColor, 1000, colors);
+}
+
+function stopSwitchBgColor() {
+  isActive = false;
+  clearInterval(setNewColor);
+}
 
 function changeColor(arrayOfColors) {
   const maxNumber = arrayOfColors.length - 1;
@@ -25,21 +39,6 @@ function changeColor(arrayOfColors) {
   refs.body.style.backgroundColor = colors[randomNumber];
 }
 
-function changeBgColor() {
-  if (isActive) {
-    return;
-  }
-  isActive = true;
-  const newColor = setInterval(changeColor, 1000, colors);
-}
-
 function randomIntegerFromInterval(min, max) {
-  console.log(Math.floor(Math.random() * (max - min + 1) + min));
   return Math.floor(Math.random() * (max - min + 1) + min);
-}
-
-function stopSwitchColor() {
-  isActive = false;
-  console.log('click');
-  clearInterval(newColor);
 }
