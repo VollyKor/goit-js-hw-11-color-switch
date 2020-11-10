@@ -24,11 +24,13 @@ function startSwitchBgColor() {
     return;
   }
   isActive = true;
+  refs.start.setAttribute('disabled', '')
   setNewColor = setInterval(changeColor, 1000, colors);
 }
 
 function stopSwitchBgColor() {
   isActive = false;
+  refs.start.removeAttribute('disabled')
   clearInterval(setNewColor);
 }
 
